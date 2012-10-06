@@ -13,12 +13,23 @@ class StorageManager{
     private:
         Passenger *head;
         Passenger *tail;
+        AllocationNode *alloc;
+        AllocationNode *alloc_tail;
         void allocate_more(int amount = 50);
     public:
         StorageManager(int init_vol = 512);
         Passenger* get_new();               //获取新乘客(数据未初始化)
         void push_arrived(Passenger *);     //回退到达后的乘客并统计信息
         ~StorageManager();
+}
+
+/*
+AllocationNode类
+形成记录内存分配的链表
+*/
+struct AllocationNode{
+    Passenger *mem_ptr;
+    AllocationNode *next;
 }
 
 #endif
