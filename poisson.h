@@ -19,15 +19,17 @@ using namespace std;
 
 class poisson
 {
-	public:
-	poisson(ElevatorParameters*);
-	double poisson_function(int k); // 构造泊松公式，计算有限个点的概率
-	int get_next(); // 由得到的泊松分布，产生随即数，确定新乘客的个数
-	
-	private:
-	ElevatorParameters* poisson_para;
-	double distribution[10000];
-	int sum_area;
+public:
+    poisson(ElevatorParameters*);
+    double poisson_function(int k); // 构造泊松公式，计算有限个点的概率
+    void culculate_dis();
+    int get_next(); // 由得到的泊松分布，产生随即数，确定新乘客的个数
+    ~poisson(){};
+    
+private:
+    ElevatorParameters* poisson_para;
+    double distribution[1000];
+    int sum_area;
 };
 
 #endif 

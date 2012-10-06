@@ -4,7 +4,8 @@ input.cpp
 
 #include "input.h"
 
-void set_default(ElevatorParameters *param){
+void set_default(ElevatorParameters *param)
+{
     param->elevator_num = 2;
     param->elevator_speed = 3;
     param->elevator_load = 7;

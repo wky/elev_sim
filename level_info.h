@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "defs.h"
 #include "storage.h"
-#include "poisson"
+#include "poisson.h"
 
 using namespace std;
 
@@ -21,8 +21,8 @@ class level_info
 	
 	ElevatorParameters* transcript_elev;                     // 定义中变量的副本
 	Passenger** pass_head; 	                                 // 楼层乘客的链表
-	StorageManager* level_stomanger;                         // 后面调用其中的函数得到新的乘客连接到楼层乘客链表中
-	poisson culculate_poissona
+	StorageManager* level_sto_manager;                      // 后面调用其中的函数得到新的乘客连接到楼层乘客链表中
+	poisson culculate_poisson;
 };
 
 #endif

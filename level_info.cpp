@@ -5,14 +5,15 @@
 #include "level_info.h"
 
 level_info::level_info(ElevatorParameters* elev_para, StorageManager* level_manager)
+:culculate_poisson(elev_para)
 {
 	transcript_elev = elev_para;                       // 问题定义的副本
 	level_sto_manager = level_manager;                 // 后面调用其中的函数得到新的乘客连接到楼层乘客链表中
-	culculate_poisson = new poisson(transcript_elev);
-	pass_head = new Passenger[transcript_elev->level_num];
+	//culculate_poisson = *new poisson(transcript_elev); // new指针
+	*pass_head = new Passenger[transcript_elev->level_num];
 	for(int i  = 0; i < transcript_elev->level_num; i ++)
 	{
-		pass_head->next = NULL;
+		pass_head[i]->next = NULL;
 	}
 }
 
@@ -31,10 +32,10 @@ void level_info::generate_passenger()
 			tmp = tmp->next;
 	   	}
 
-		int tmp_sumnext = sum_next(1 - 0.5*(i/transcript_elev->level_num));//按照楼层修改新入的乘客数量
+		int tmp_sumnext = sum_next*(1 - 0.5*(i/transcript_elev->level_num));//按照楼层修改新入的乘客数量
 		for(int j = 0; j < tmp_sumnext; j ++)
 		{
-			tmp->next = level_sto_manager.get_new();
+			tmp->next = level_sto_manager->get_new();
 			tmp = tmp->next;
 		}
 		tmp->next = NULL;
