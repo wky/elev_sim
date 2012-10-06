@@ -7,7 +7,7 @@ Group:
     Name: (not yet decided)
     Members:
         杨纬坤 1100012442 wkyjyy@gmail.com
-        刘思远 1100012*** siyupku@gmail.com (plz add your student id)
+		刘思远 1100012713 siyupku@gmail.com 
 Overview:
     A small system that simulates the running of a elevator-system.
     Input generation and operation's algorithm done in C/C++.

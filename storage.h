@@ -9,6 +9,7 @@ storage.h
 StorageManager类
 单链表的内存池管理乘客
 */
+
 class StorageManager{
     private:
         Passenger *head;
