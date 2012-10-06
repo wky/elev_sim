@@ -6,12 +6,15 @@
 #include "poisson.h"
 
 int main()
+<<<<<<< HEAD
 {/*
 <<<<<<< HEAD
 	int a=0;
 =======
+=======
+{
+>>>>>>> 336794ab533e3cdc4def357d6921f72a27b828d7
     int a=0;
->>>>>>> ea49c7262febd4d61364bad39a94165a20459ca1
     int b = 1;
     printf("yeah, it works!\n%d\n", a+b);
     StorageManager * m = new StorageManager(5);
@@ -35,7 +38,6 @@ int main()
     printf("ptr:0x%x\n", ptr);    
     m->push_arrived(ptr);
     delete m;
-<<<<<<< HEAD
     */
     ElevatorParameters e;
     e.arrival_rate = 0.8;
@@ -47,6 +49,8 @@ int main()
     return 0;
     /*
 =======
+=======
+>>>>>>> 336794ab533e3cdc4def357d6921f72a27b828d7
     
     ElevatorParameters * param = new ElevatorParameters;
     bool input_res = get_param(argc, argv, param);
@@ -62,7 +66,20 @@ int main()
            param->output_file,
            param->algorithm_select,
            param->verbose?"yes":"no");
->>>>>>> ea49c7262febd4d61364bad39a94165a20459ca1
+
+    poisson p(param);
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;    
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+
+
     return 0;
 */
 }
