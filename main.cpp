@@ -6,16 +6,14 @@
 #include "poisson.h"
 
 int main()
-{
+{/*
 <<<<<<< HEAD
-    /*
 	int a=0;
 =======
     int a=0;
 >>>>>>> ea49c7262febd4d61364bad39a94165a20459ca1
     int b = 1;
     printf("yeah, it works!\n%d\n", a+b);
-/*
     StorageManager * m = new StorageManager(5);
     Passenger* ptr = m->get_new();
     printf("m:0x%x, ptr:0x%x\n", m, ptr);
@@ -43,18 +41,13 @@ int main()
     e.arrival_rate = 0.8;
     poisson p(&e);
     cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-    
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
+    StorageManager s;
+    level_info l(&e, &s);
+    l.generate_passenger();
+    return 0;
+    /*
 =======
-*/    
+    
     ElevatorParameters * param = new ElevatorParameters;
     bool input_res = get_param(argc, argv, param);
     if (!input_res)
@@ -71,6 +64,6 @@ int main()
            param->verbose?"yes":"no");
 >>>>>>> ea49c7262febd4d61364bad39a94165a20459ca1
     return 0;
-
+*/
 }
 // sob: Weikun "William" Yang wkyjyy@gmail.com
