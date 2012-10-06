@@ -15,6 +15,7 @@ StorageManager::StorageManager(int init_vol){
 #endif
     alloc = new AllocationNode;
     alloc->mem_ptr = head;
+    alloc->mem_size = init_vol;
     alloc->next = NULL;
     alloc_tail = alloc;
     tail = head + (init_vol - 1);
@@ -48,22 +49,26 @@ void StorageManager::push_arrived(Passenger *p){
 
 void StorageManager::allocate_more(int amount){
     Passenger *new_mem = new Passenger[amount];
+    alloc_tail->next = new AllocationNode;
+    alloc_tail = alloc_tail->next;
+    alloc_tail->mem_ptr = new_mem;
+    alloc_tail->mem_size = amount;
+    alloc_tail->next = NULL;
 #ifdef __DEBUG_STORAGE
     printf("__DEBUG_STORAGE: allocated #%d more Passengers.\n", amount);
 #endif
     head->next = new_mem;
-    new_mem->next = tail;
-    alloc_tail->next = new AllocationNode;
-    alloc_tail = alloc_tail->next;
-    alloc_tail->mem_ptr = new_mem;
-    alloc_tail->next = NULL;
+    Passenger *mem_end = new_mem + amount - 1;
+    for (; new_mem != mem_end; new_mem++)
+        new_mem->next = new_mem + 1;
+    mem_end->next = tail;
 }
 
 StorageManager::~StorageManager(){
     AllocationNode *ptr;
     while (alloc != NULL){
 #ifdef __DEBUG_STORAGE
-        printf("__DEBUG_STORAGE: delete Passengers from 0x%x.\n", alloc->mem_ptr);
+        printf("__DEBUG_STORAGE: delete #%d Passengers from 0x%x.\n", alloc->mem_size, alloc->mem_ptr);
 #endif
         delete[] alloc->mem_ptr;
         ptr = alloc;

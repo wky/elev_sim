@@ -5,10 +5,10 @@ storage.h
 #ifndef __storage_h
 #define __storage_h
 
-#define __DEBUG_STORAGE
-
 #include "defs.h"
-//class Passenger;
+
+//#define __DEBUG_STORAGE
+
 
 /*
  AllocationNode类
@@ -16,6 +16,7 @@ storage.h
  */
 struct AllocationNode{
     Passenger *mem_ptr;
+    int mem_size;
     AllocationNode *next;
 };
 

@@ -2,7 +2,10 @@
 input.cpp
 */
 
+#include <stdlib.h>
+#include <stdio.h>
 #include "input.h"
+#include "defs.h"
 
 void set_default(ElevatorParameters *param){
     param->elevator_num = 2;
@@ -11,18 +14,21 @@ void set_default(ElevatorParameters *param){
     param->level_num = 12;
     param->arrival_rate = 0.8;
     param->simulation_cycles = 200;
-    param->algorithm_select = OperationAlgorithm.Default;
+    param->algorithm_select = Default;
     param->output_file = default_output;
     param->verbose = false;
 }
 
 bool get_param(int argc, char *argv[], ElevatorParameters *param){
     if (param == NULL)
-        return;
+        return false;
     set_default(param);
-    int c;
+    int c, arg, len;
     while ((c = getopt_long(argc, argv, short_opt, long_opt, NULL)) != -1) {
-        int arg = atoi(optarg);
+        if (optarg != NULL){
+            arg = atoi(optarg);
+            len = strlen(optarg);
+        }
         switch (c) {
             case 'n':
                 param->elevator_num = arg;
@@ -43,7 +49,6 @@ bool get_param(int argc, char *argv[], ElevatorParameters *param){
                 param->simulation_cycles = arg;
                 break;
             case 'o':
-                int len = strlen(optarg);
                 param->output_file = new char[len+1];
                 strcpy(param->output_file, optarg);
                 break;
