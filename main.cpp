@@ -5,7 +5,7 @@
 #include "level_info.h"
 #include "poisson.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     ElevatorParameters * param = new ElevatorParameters;
     bool input_res = get_param(argc, argv, param);
