@@ -7,12 +7,7 @@
 
 int main()
 {
-<<<<<<< HEAD
-    /*
-	int a=0;
-=======
     int a=0;
->>>>>>> ea49c7262febd4d61364bad39a94165a20459ca1
     int b = 1;
     printf("yeah, it works!\n%d\n", a+b);
 /*
@@ -37,24 +32,8 @@ int main()
     printf("ptr:0x%x\n", ptr);    
     m->push_arrived(ptr);
     delete m;
-<<<<<<< HEAD
     */
-    ElevatorParameters e;
-    e.arrival_rate = 0.8;
-    poisson p(&e);
-    cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
     
-        cout << p.get_next() << endl;
-        cout << p.get_next() << endl;
-=======
-*/    
     ElevatorParameters * param = new ElevatorParameters;
     bool input_res = get_param(argc, argv, param);
     if (!input_res)
@@ -69,7 +48,20 @@ int main()
            param->output_file,
            param->algorithm_select,
            param->verbose?"yes":"no");
->>>>>>> ea49c7262febd4d61364bad39a94165a20459ca1
+
+    poisson p(param);
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;    
+    cout << p.get_next() << endl;
+    cout << p.get_next() << endl;
+
+
     return 0;
 
 }
