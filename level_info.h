@@ -21,7 +21,8 @@ class level_info
 	
 	ElevatorParameters* transcript_elev;                     // 定义中变量的副本
 	Passenger** pass_head; 	                                 // 楼层乘客的链表
-	StorageManager* level_sto_manager;                      // 后面调用其中的函数得到新的乘客连接到楼层乘客链表中
+	Passenger** pass_tail;
+    StorageManager* level_sto_manager;                      // 后面调用其中的函数得到新的乘客连接到楼层乘客链表中
 	poisson culculate_poisson;
 };
 
