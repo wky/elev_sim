@@ -10,6 +10,7 @@ defs.h
 调度算法选择
 */
 enum OperationAlgorithm{
+    Default,
     ManagerA,
     ManagerB
 }
@@ -24,7 +25,9 @@ struct ElevatorParameters{
     int level_num;          //楼层数量
     double arrival_rate;    //乘客到达数量(时间片内平均)
     int simulation_cycles;  //模拟循环数(时间片)
+    char *output_file;      //输出的文件名
     enum algorithm_select;  //调度算法选择
+    bool verbose;           //是否输出细节
 }
 
 /*

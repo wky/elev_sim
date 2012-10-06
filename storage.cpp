@@ -24,6 +24,7 @@ Passenger* StorageManager::get_new(){
     if (head->next == tail)
         allocate_more();
     head = head->next;
+    ret->next = NULL;
     return ret;
 }
 
