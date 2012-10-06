@@ -13,7 +13,7 @@ enum OperationAlgorithm{
     Default,
     ManagerA,
     ManagerB
-}
+};
 
 /*
 运行参数
@@ -26,9 +26,9 @@ struct ElevatorParameters{
     double arrival_rate;    //乘客到达数量(时间片内平均)
     int simulation_cycles;  //模拟循环数(时间片)
     char *output_file;      //输出的文件名
-    enum algorithm_select;  //调度算法选择
+    OperationAlgorithm algorithm_select;  //调度算法选择
     bool verbose;           //是否输出细节
-}
+};
 
 /*
 乘客信息
@@ -39,6 +39,6 @@ struct Passenger{
     int destination_level;  //目标层数
     int waiting_time;       //等待时间(不含梯内时间)
     Passenger *next;        //单链表指针
-}
+};
 
 #endif

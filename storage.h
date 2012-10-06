@@ -5,6 +5,20 @@ storage.h
 #ifndef __storage_h
 #define __storage_h
 
+#define __DEBUG_STORAGE
+
+#include "defs.h"
+//class Passenger;
+
+/*
+ AllocationNode类
+ 形成记录内存分配的链表
+ */
+struct AllocationNode{
+    Passenger *mem_ptr;
+    AllocationNode *next;
+};
+
 /*
 StorageManager类
 单链表的内存池管理乘客
@@ -22,16 +36,7 @@ class StorageManager{
         Passenger* get_new();               //获取新乘客(数据未初始化)
         void push_arrived(Passenger *);     //回退到达后的乘客并统计信息
         ~StorageManager();
-}
-
-/*
-AllocationNode类
-形成记录内存分配的链表
-*/
-struct AllocationNode{
-    Passenger *mem_ptr;
-    AllocationNode *next;
-}
+};
 
 #endif
 

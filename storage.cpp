@@ -1,6 +1,7 @@
 /*
 storage.cpp
 */
+#include <stdio.h>
 #include "storage.h"
 
 StorageManager::StorageManager(int init_vol){
@@ -9,6 +10,9 @@ StorageManager::StorageManager(int init_vol){
         return;
     }
     head = new Passenger[init_vol];
+#ifdef __DEBUG_STORAGE
+    printf("__DEBUG_STORAGE: allocated #%d of Passengers.\n", init_vol);
+#endif
     alloc = new AllocationNode;
     alloc->mem_ptr = head;
     alloc->next = NULL;
@@ -25,6 +29,9 @@ Passenger* StorageManager::get_new(){
         allocate_more();
     head = head->next;
     ret->next = NULL;
+#ifdef __DEBUG_STORAGE
+    printf("__DEBUG_STORAGE: given new Passenger at 0x%x.\n", ret);
+#endif
     return ret;
 }
 
@@ -34,10 +41,16 @@ void StorageManager::push_arrived(Passenger *p){
     p->next = NULL;
     tail->next = p;
     tail = p;
+#ifdef __DEBUG_STORAGE
+    printf("__DEBUG_STORAGE: reclaimed a Passenger at 0x%x.\n", tail);
+#endif
 }
 
 void StorageManager::allocate_more(int amount){
-    Passenger *new_mem = new Passneger[amount];
+    Passenger *new_mem = new Passenger[amount];
+#ifdef __DEBUG_STORAGE
+    printf("__DEBUG_STORAGE: allocated #%d more Passengers.\n", amount);
+#endif
     head->next = new_mem;
     new_mem->next = tail;
     alloc_tail->next = new AllocationNode;
@@ -49,6 +62,9 @@ void StorageManager::allocate_more(int amount){
 StorageManager::~StorageManager(){
     AllocationNode *ptr;
     while (alloc != NULL){
+#ifdef __DEBUG_STORAGE
+        printf("__DEBUG_STORAGE: delete Passengers from 0x%x.\n", alloc->mem_ptr);
+#endif
         delete[] alloc->mem_ptr;
         ptr = alloc;
         alloc = alloc->next;
