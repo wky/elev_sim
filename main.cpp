@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
         return 0;
     StorageManager * m = new StorageManager();
     level_info *levels = new level_info(param, m);
-    
+    //levels->generate_passenger();
     return 0;
     
 }

@@ -13,8 +13,8 @@ level_info::level_info(ElevatorParameters* elev_para, StorageManager* level_mana
     pass_tail = new Passenger*[transcript_elev->level_num];
 	for(int i  = 0; i < transcript_elev->level_num; i ++)
 	{
-        pass_head[i]->next = pass_tail[i];
-		pass_tail[i]->next = NULL;
+        pass_head[i] = NULL;
+		pass_tail[i] = NULL;
 	}
 }
 
@@ -24,11 +24,19 @@ void level_info::generate_passenger()
 	for(int i = 0; i < transcript_elev->level_num; i ++)
 	{
         int sum_next = culculate_poisson.get_next();//记录在泊松分布的计算下，该楼层得到的新乘客
-		for(int j = 0; j < sum_next; j ++)
-		{
-            pass_tail[i] = level_sto_manager->get_new();
-            level_sto_manager->get_new()->next = NULL;
-		}
+#ifdef __DEBUG_LEVEL
+        printf("adding #%d passengers on level #%d.\n", sum_next, i + 1);
+#endif
+        while (sum_next--) {
+            if (pass_head[i] == NULL){
+                pass_head[i] = level_sto_manager->get_new();
+                pass_tail[i] = pass_head[i];
+            }
+            else{
+                pass_tail[i]->next = level_sto_manager->get_new();
+                pass_tail[i] = pass_tail[i]->next;
+            }
+        }
 	}
 }
 

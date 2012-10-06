@@ -11,6 +11,8 @@
 #include "storage.h"
 #include "poisson.h"
 
+//#define __DEBUG_LEVEL
+
 using namespace std;
 
 class level_info
