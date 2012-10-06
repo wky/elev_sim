@@ -9,7 +9,9 @@
 
 poisson::poisson(ElevatorParameters* in_para)
 {
+    srand( (unsigned)time(0) ); // 以系统时间为种子
 	poisson_para = in_para;
+    this->culculate_dis();
 }
 
 double poisson::poisson_function(int k)
@@ -18,8 +20,9 @@ double poisson::poisson_function(int k)
 
 	for(int i = 1; i <= k; i ++) // 阶乘
 		factorial = factorial*i;
+//    fprintf(stderr,"%d %lf\n",k,factorial);
 	return pow((double)poisson_para->arrival_rate, k * 1.0)
-            * pow(M_E*1.0, -poisson_para->arrival_rate*1.0)
+            * pow(2.718281828*1.0, -poisson_para->arrival_rate*1.0)
             /factorial; //泊松公式
 }
 void poisson::culculate_dis()
@@ -35,7 +38,6 @@ void poisson::culculate_dis()
 }
 int poisson::get_next()
 {
-	srand( (unsigned)time(0) ); // 以系统时间为种子
 	double select_p = rand()/(double)(RAND_MAX); // 产生0~1的随即浮点数
 	
 	double P = 0; // 累计概率，使概率分布具有几何性质

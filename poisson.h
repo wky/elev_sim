@@ -28,7 +28,7 @@ public:
     
 private:
     ElevatorParameters* poisson_para;
-    double distribution[1000];
+    double distribution[10000];
     int sum_area;
 };
 
