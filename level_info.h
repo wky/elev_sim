@@ -22,8 +22,10 @@ class level_info
 	void generate_passenger();                               // 在一个时间片以后将得到的新乘客连入列表
 	
 	ElevatorParameters* transcript_elev;                     // 定义中变量的副本
-	Passenger** pass_head; 	                                 // 楼层乘客的链表
-	Passenger** pass_tail;
+	Passenger** passup_head; 	                                 // 楼层乘客的链表
+	Passenger** passup_tail;
+    Passenger** passdown_head; 	                                 // 楼层乘客的链表
+	Passenger** passdown_tail;
     StorageManager* level_sto_manager;                      // 后面调用其中的函数得到新的乘客连接到楼层乘客链表中
 	poisson culculate_poisson;
 };
