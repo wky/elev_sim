@@ -20,19 +20,23 @@ Log::~Log(){
     fclose(fp);
 }
 
-void Log::add(int level, int num){
+void Log::add(int level, int num)
+{
+    
+}
+
+void Log::load(int level, int elev_id, int num)
+{
 
 }
 
-void Log::load(int elev_id, int num){
+void Log::drop(int level, int elev_id, int num)
+{
 
 }
 
-void Log::drop(int elev_id, int num){
-
-}
-
-void Log::move(int elev_id, int diff){
+void Log::move(int level, int elev_id, int diff)
+{
 
 }
 

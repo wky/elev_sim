@@ -1,0 +1,126 @@
+//
+//  managerA.cpp
+//  
+//
+//  Created by Siyumato on 12-10-10.
+//
+//
+
+#include "managerA.h"
+
+managerA::managerA(ElevatorParameters* elev_para):write_log(elev_para), levelInfo_forManager(elev_para)
+{
+    ManaElev_para = elev_para;
+    direction = new int[elev_para->elevator_num+1];
+    level = new int[elev_para->elevator_num+1];
+    sum_passenger = new int[elev_para->elevator_num+1]
+    head = new Passenger*[elev_para->elevator_num+1];
+    tail = new Passenger*[elev_para->elevator_num+1];
+    for(int i = 0; i < elev_para->elevator_num+1; i ++)
+    {
+        direction[i] = 1; // 初始情况下假设在1层向上运动
+        head->next = tail;
+        tail = NULL;
+        sum_passenger = 0;
+    }
+}
+
+void managerA::manage()
+{/*每操作一次manage  
+    *先改变电梯方向
+    第一步：查看有没有下乘的
+    第二步：查看有没有上乘的
+    第三步：查看电梯里有没有人
+    第四步：改变相应的manager的变量，层数（由改变以后的方向运行一次manage就改变一层）
+            log前面三步
+  */
+    for(int num_elev = 0; num_elev < ManaElev_para->elevator_num; num_elev ++)
+    {
+        int sum_on = 0;//记录在这一个电梯的当前位置下，上乘了的乘客数；
+        int sum_off = 0;//记录在这一个电梯的当前位置下，下乘了的乘客数；
+        
+        if(level[num_elev] == 1 || level[num_elev] == ManaElev_para->level_num)
+            direction[num_elev] = -direction[num_elev];
+        
+        Passenger* checkpre = head[num_elev]->next;
+        Passenger* checkrear = head[num_elev];
+        /*第一步*/
+        while(1)
+        {
+            if(sum_passenger == 0) break;
+            else if( (checkpre->destination_level-checkpre->arrival_level)
+                    * direction[num_elev] > 0)//说明是同方向的
+            {
+                sum_off ++;
+                sum_passenger[num_elev] --;
+                // push_arrived 该乘客
+                (levelInfo_forManager->level_sto_manager)->push_arrived(checkpre);
+                checkrear->next = checkpre->next;//把这个乘客去掉
+                checkpre = checkpre->next;
+            }
+            else
+            {
+                checkrear = checkpre;//把这个乘客去掉
+                checkpre = checkpre->next;
+            }
+        }
+        
+        /*第二步*/
+        while(1)//不断上乘
+        {
+            if(sum_passenger[num_elev] == ManaElev_para->elevator_load)//满载
+                break;
+            if(direction[num_elev] == 1)//上行
+            {
+                Passenger* pullp = levelInfo_forManager->passup_head;
+                if(pullp != NULL)//说明该层有人要上行
+                {
+                    /*先到先上，不考虑谁上得更高*/
+                    pullp->next = head[num_elev]->next;
+                    head[num_elev]->next = pullp;
+                    /*将这层楼的该乘客抹去*/
+                    levelInfo_forManager->passup_head = levelInfo_forManager->passup_head->next;
+                    sum_passenger[num_elev] ++;
+                    sum_on ++;
+                }
+                else break;//上行无人
+            }
+            else
+            {
+                Passenger* pullp = levelInfo_forManager->passdown_head;
+                if(pullp != NULL)//说明该层有人要上行
+                {
+                    /*先到先上，不考虑谁上得更高*/
+                    pullp->next = head[num_elev]->next;
+                    head[num_elev]->next = pullp;
+                    /*将这层楼的该乘客抹去*/
+                    levelInfo_forManager->passdown_head = levelInfo_forManager->passdown_head->next;
+                    sum_passenger[num_elev] ++;
+                    sum_on ++;
+                }
+                else break;//下行无人
+            }
+        }
+        
+        /*第三步，判断电梯是否移动*/
+        write_log->load(level[num_elev],num_elev, sum_on);
+        write_log->drop(level[num_elev],num_elev, sum_off);
+        if(sum_passenger[num_elev] != 0)
+            level[num_elev] += direction[num_elev];
+        /*第四步*/
+        write_log->move(level[num_elev],num_elev, direction[num_elev]);
+    }
+}
+managerA::~managerA()
+{
+    delete []direction;
+    delete []level;
+    delete []sum_passenger;
+    for(int i = 0; i < ManaElev_para->elevator_num; i ++)
+    {
+        delete []head[i];
+        delete []tail[i];
+    }
+    delete []head;
+    delete []tail;
+}
