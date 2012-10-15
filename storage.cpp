@@ -1,3 +1,5 @@
+// TODO: add statistics part.
+
 /*
 storage.cpp
 */
@@ -64,6 +66,10 @@ void StorageManager::allocate_more(int amount){
     mem_end->next = tail;
 }
 
+void StorageManager::add_passenger_stats(Stats* stats){
+    // TODO
+}
+
 StorageManager::~StorageManager(){
     AllocationNode *ptr;
     while (alloc != NULL){
@@ -76,4 +82,6 @@ StorageManager::~StorageManager(){
         delete ptr;
     }
 }
+
+// signed-off-by: Weikun Yang wkyjyy@gmail.com
 

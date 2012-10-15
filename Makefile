@@ -1,11 +1,8 @@
-CC = gcc
+CC = g++
 CFLAGS = -O1
-
-all : main.o
-	$(CC) $(CFLAGS) -o sim_elev main.o
-
-main.o : main.cpp
-	$(CC) $(CFLAGS) -c  -o main.o main.cpp
+OBJS = main.o input.o storage.o log.o level_info.o poisson.o
+all : $(OBJS)
+	$(CC) $(CFLAGS) -o sim_elev $(OBJS)
 
 clean :
 	rm *.o sim_elev

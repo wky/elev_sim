@@ -1,0 +1,16 @@
+任务：
+    lsy：
+        managerA有编译错误，这个你改一下。还有manager/namagerA的构造函数按照main.cpp里面注释改成三个参数的吧
+        另外解释一下类之间的调用关系：
+            
+            level_info里面构造函数需要加一个Log*参数的要调用StorageManager的get_new(), 设定好乘客的信息
+            (出现楼层，出现时间-要有个变量记录当前是第几个时间片，目标楼层-这个是随即机的)（看defs.h）
+            还要调用Log的add, 记录新添加的乘客
+            
+            manager里面，另加run()函数（main.cpp里面只会调用run）,根据时间片循环调用manage()，
+            manage()里面要调用Log的move,load,drop
+            还有乘客上下电梯时，记录时间，并用storagemanager的push_arrived()把到达的乘客回收了
+编译：
+直接make就行，makefile我写好了。你先把你的几个类都改好，然后单独编译（不用跟main.cpp一起）一下，通过了
+之后检查检查，再push。
+

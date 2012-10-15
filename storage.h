@@ -1,3 +1,5 @@
+// TODO: add statistics part.
+
 /*
 storage.h
 管理乘客的存储
@@ -31,13 +33,18 @@ class StorageManager{
         Passenger *tail;
         AllocationNode *alloc;
         AllocationNode *alloc_tail;
-        void allocate_more(int amount = 50);
+        void allocate_more(int amount = 100);
     public:
         StorageManager(int init_vol = 512);
-        Passenger* get_new();               //获取新乘客(数据未初始化)
-        void push_arrived(Passenger *);     //回退到达后的乘客并统计信息
+        Passenger* get_new();               // 获取新乘客(数据未初始化，next ptr是NULL)
+        void push_arrived(Passenger *);     // 回退到达后的乘客并统计信息
+        void add_passenger_stats(Stats*);   // 写入关于乘客的统计信息
         ~StorageManager();
 };
 
 #endif
+
+// signed-off-by Weikun Yang wkyjyy@gmail.com
+
+
 
