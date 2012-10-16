@@ -18,6 +18,7 @@ class managerA:public manager
 public:
     managerA(ElevatorParameters*);
     void manage();
+    void run();
     ~manager();
 };
 

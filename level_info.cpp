@@ -3,8 +3,9 @@
  */
 
 #include "level_info.h"
+#include <math.h>
 
-level_info::level_info(ElevatorParameters* elev_para, StorageManager* level_manager)
+level_info::level_info(ElevatorParameters* elev_para, StorageManager* level_manager, Log* level_log)
 :culculate_poisson(elev_para)
 {
 	transcript_elev = elev_para;                       // 问题定义的副本
@@ -20,20 +21,38 @@ level_info::level_info(ElevatorParameters* elev_para, StorageManager* level_mana
         passdown_head[i] = NULL;
 		passdown_tail[i] = NULL;
 	}
+    
+    updatelevel_log = level_log;
+    //pierce_time = 0;
+    srand( (unsigned)time(0) ); // 以系统时间为种子
 }
 
-void level_info::generate_passenger()              
+void level_info::generate_passenger(int pierce_time)//传入时间点,每个时间片的开始处理一次
 {
 	/*将新的乘客依次接到尾节点上*/
 	for(int i = 0; i < transcript_elev->level_num; i ++)
 	{
         int sum_next = culculate_poisson.get_next();//记录在泊松分布的计算下，该楼层得到的新乘客
+        updatelevel_log->add(i, sum_next); // 得到该楼层要得到的乘客，直接log记录要加的乘客数
+        
 #ifdef __DEBUG_LEVEL
         printf("adding #%d passengers on level #%d.\n", sum_next, i + 1);
 #endif
         while (sum_next--)
         {
+            /*先产生一个随机数得到目标楼层，然后初始化passenger*/
             Passenger* judge_tmp = level_sto_manager->get_new();
+            int aim_level;
+            while(1)
+            {
+                aim_level = rand() % (transcript_elev->level_num);
+                if(aim_level != i)
+                    break;
+            }
+            judge_tmp->arrival_time = pierce_time   ;
+            judge_tmp->arrival_level = i;
+            judge_tmp->destination_level = aim_level;
+            
             if(judge_tmp->destination_level - judge_tmp->arrival_level > 0)//上楼
             {
                 if (passup_head[i] == NULL)
@@ -65,5 +84,6 @@ void level_info::generate_passenger()
             
         }
 	}
+    updatelevel_log->start_time_slot();
 }
 

@@ -10,7 +10,8 @@ static unsigned int version_code = 0x1;
 /*
 调度算法选择
 */
-enum OperationAlgorithm{
+enum OperationAlgorithm
+{
     Default = 1,
     ManagerA = 1,
     ManagerB
@@ -19,7 +20,8 @@ enum OperationAlgorithm{
 /*
 运行参数
 */
-struct ElevatorParameters{
+struct ElevatorParameters
+{
     int elevator_num;       //电梯数量
     int elevator_speed;     //电梯速度(一个时间片内)
     int elevator_load;      //电梯载客量
@@ -34,7 +36,8 @@ struct ElevatorParameters{
 /*
 乘客信息
 */
-struct Passenger{
+struct Passenger
+{
     int arrival_time;       //到达时间
     int arrival_level;      //到达层数
     int destination_level;  //目标层数
@@ -46,7 +49,8 @@ struct Passenger{
 /*
 统计数据
 */
-struct Stats{
+struct Stats
+{
     float avg_twait;       //平均等待时间
     float max_twait;       //最长等待时间
     float avg_tonboard;    //平均乘梯时间

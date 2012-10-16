@@ -27,7 +27,9 @@ private:
     int *level;
     int *sum_passenger;
     Log* write_log;
-    level_info* levelInfo_forManager;
+    level_info* levelInfo_forManager;//楼层信息
+    int now_time;//当前的时间片
+    
 public:
     manager(){}
     virtual void manage(){}

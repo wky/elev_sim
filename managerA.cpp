@@ -23,6 +23,7 @@ managerA::managerA(ElevatorParameters* elev_para):write_log(elev_para), levelInf
         tail = NULL;
         sum_passenger = 0;
     }
+    now_time = 0;
 }
 
 void managerA::manage()
@@ -111,6 +112,26 @@ void managerA::manage()
         write_log->move(level[num_elev],num_elev, direction[num_elev]);
     }
 }
+
+void managerA::run()
+{
+    /*
+     第一层循环：时间片的循环
+        修改level_info
+        第二层循环：以速度为单位的循环
+            运行楼层，如果中间需要停止等待，直接结束这个循环
+     */
+    for(int pierce = 0; pierce < ManaElev_para->simulation_cycles; pierce ++)
+    {
+        levelInfo_forManager->generate_passenger(pierce);
+        for(int go = 0; go < ManaElev_para->elevator_speed; go ++)
+        {
+            manage();
+        }
+        write_log->end_time_slot();
+    }
+}
+
 managerA::~managerA()
 {
     delete []direction;
