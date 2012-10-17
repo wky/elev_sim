@@ -10,6 +10,7 @@
 #include "defs.h"
 #include "storage.h"
 #include "poisson.h"
+#include "log.h"
 #include <math.h>
 
 //#define __DEBUG_LEVEL
@@ -20,7 +21,7 @@ class level_info
 {
 	public:
 	level_info(ElevatorParameters* , StorageManager*, Log*);       // 使用定义初始化楼层信息
-	void generate_passenger();                               // 在一个时间片以后将得到的新乘客连入列表
+	void generate_passenger(int);                               // 在一个时间片以后将得到的新乘客连入列表
 	
 	ElevatorParameters* transcript_elev;                     // 定义中变量的副本
 	Passenger** passup_head; 	                                 // 楼层乘客的链表

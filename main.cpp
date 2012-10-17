@@ -16,9 +16,9 @@ int main(int argc, char *argv[])
         return 0;
     StorageManager * stom = new StorageManager();
     Log *log = new Log(param);
-    level_info *levi = new level_info(param, stom);// 应该改(param, stom, log);
+    level_info *levi = new level_info(param, stom, log);// 应该改(param, stom, log);
     // TODO: add algorithm selection
-    manager* elevm = new manager(); //应该改成managerA(param, levi, log);
+    manager* elevm = new manager(param, levi, log); //应该改成managerA(param, levi, log);
     elevm->manage();
     Stats* stats = new Stats;
     stom->add_passenger_stats(stats);

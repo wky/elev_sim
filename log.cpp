@@ -17,17 +17,18 @@ Log::Log(ElevatorParameters* param){
         exit(EXIT_FAILURE);
     }
     counter = 0;
+    int bytes_wr = 0;
     //文件头魔数
-    fwrite((void*)&magic_num, sizeof(unsigned int), 1, fp);
+    bytes_wr += fwrite((void*)&magic_num, sizeof(unsigned int), 1, fp);
     //版本号
-    fwrite((void*)&version_code, sizeof(unsigned int), 1, fp);
+    bytes_wr += fwrite((void*)&version_code, sizeof(unsigned int), 1, fp);
     //运行参数的前7个变量
-    fwrite((void*)param, sizeof(int) * 6 + sizeof(float), 1, fp);
+    bytes_wr += fwrite((void*)param, sizeof(int) * 6 + sizeof(float), 1, fp);
     //预留统计数据的位置
-    stats_pos = ftell(fp);
+    stats_pos = bytes_wr;
     //填充0xff直到data_offset
-    for (int i = ~0; ftell(fp) < data_offset;)
-        fwrite((void*)&i, sizeof(int), 1, fp);
+    for (int i = ~0; bytes_wr < data_offset;)
+        bytes_wr += fwrite((void*)&i, sizeof(int), 1, fp);
     new_pas = new int[levels];
 }
 

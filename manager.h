@@ -18,7 +18,7 @@
 //在一格manager对象里对所有的电梯进行操作
 class manager
 {
-private:
+public:
     ElevatorParameters* ManaElev_para;
     int *direction;                  //当前电梯运行方向(1为上，-1为下，如果到达1或者n，反号)
     Passenger** head;                //电梯上的乘客头
@@ -30,8 +30,8 @@ private:
     level_info* levelInfo_forManager;//楼层信息
     int now_time;//当前的时间片
     
-public:
     manager(){}
+    manager(ElevatorParameters*, level_info*, Log*){}
     virtual void manage(){}
     ~manager(){}
 };

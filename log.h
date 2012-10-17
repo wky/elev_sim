@@ -17,7 +17,7 @@ static unsigned int magic_num = 0x19951004;
 
 static unsigned int data_offset = 100;
 
-static unsigned int op_code[4] = {0, 1, 2, 1<<31};  // 代码，表示 move, load, drop, end
+static unsigned int op_code[4] = {0, 1, 2, static_cast<unsigned int>((1<<31))};  // 代码，表示 move, load, drop, end
 
 class Log
 {

@@ -11,15 +11,16 @@
 
 #include "defs.h"
 #include "level_info.h"
+#include "manager.h"
 #include "log.h"
 
 class managerA:public manager
 {
 public:
-    managerA(ElevatorParameters*);
+    managerA(ElevatorParameters*, level_info*, Log*);
     void manage();
     void run();
-    ~manager();
+    ~managerA();
 };
 
 #endif
