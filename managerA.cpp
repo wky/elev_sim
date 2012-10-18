@@ -24,9 +24,9 @@ managerA::managerA(ElevatorParameters* elev_para ,level_info* levinfo, Log* mana
     for(int i = 0; i < elev_para->elevator_num+1; i ++)
     {
         direction[i] = 1; // 初始情况下假设在1层向上运动
-        head[i]->next = tail[i];
+        head[i] = new Passenger;
         tail[i] = head[i];
-        sum_passenger = 0;
+        sum_passenger[i] = 0;
     }
     now_time = 0;
 }
@@ -51,18 +51,18 @@ void managerA::manage()
         Passenger* checkpre = head[num_elev]->next;
         Passenger* checkrear = head[num_elev];
         /*第一步*/
-        while(1)
+        while(checkpre != NULL)
         {
-            if(sum_passenger == 0) break;
+            if(sum_passenger[num_elev] == 0) break;
             else if( (checkpre->destination_level-checkpre->arrival_level)
                     * direction[num_elev] > 0)//说明是同方向的
             {
                 sum_off ++;
                 sum_passenger[num_elev] --;
                 // push_arrived 该乘客
-                (levelInfo_forManager->level_sto_manager)->push_arrived(checkpre);
                 checkrear->next = checkpre->next;//把这个乘客去掉
-                checkpre = checkpre->next;
+                (levelInfo_forManager->level_sto_manager)->push_arrived(checkpre);
+                checkpre = checkrear->next;
             }
             else
             {
@@ -78,31 +78,27 @@ void managerA::manage()
                 break;
             if(direction[num_elev] == 1)//上行
             {
-                Passenger* pullp = levelInfo_forManager->passup_head[num_elev];
+                Passenger* pullp = levelInfo_forManager->passup_head[level[num_elev]];
                 if(pullp != NULL)//说明该层有人要上行
                 {
-                    /*先到先上，不考虑谁上得更高*/
-                    pullp->next = head[num_elev]->next;
-                    head[num_elev]->next = pullp;
-                    /*将这层楼的该乘客抹去*/
-                    levelInfo_forManager->passup_head[num_elev] = levelInfo_forManager->passup_head[num_elev]->next;
+                    tail[num_elev]->next = pullp;
+                    levelInfo_forManager->passup_head[level[num_elev]] = pullp->next;
                     sum_passenger[num_elev] ++;
                     sum_on ++;
+                    pullp->out_time = now_time;//记录乘客的出梯时间
                 }
                 else break;//上行无人
             }
             else
             {
-                Passenger* pullp = levelInfo_forManager->passdown_head[num_elev];
+                Passenger* pullp = levelInfo_forManager->passdown_head[level[num_elev]];
                 if(pullp != NULL)//说明该层有人要上行
                 {
-                    /*先到先上，不考虑谁上得更高*/
-                    pullp->next = head[num_elev]->next;
-                    head[num_elev]->next = pullp;
-                    /*将这层楼的该乘客抹去*/
-                    levelInfo_forManager->passdown_head[num_elev] = levelInfo_forManager->passdown_head[num_elev]->next;
+                    tail[num_elev]->next = pullp;
+                    levelInfo_forManager->passdown_head[level[num_elev]] = pullp->next;
                     sum_passenger[num_elev] ++;
                     sum_on ++;
+                    pullp->out_time = now_time;//记录乘客的出梯时间
                 }
                 else break;//下行无人
             }
@@ -112,7 +108,10 @@ void managerA::manage()
         write_log->load(num_elev, sum_on);
         write_log->drop(num_elev, sum_off);
         if(sum_passenger[num_elev] != 0)
+        {
             level[num_elev] += direction[num_elev];
+            write_log->move(num_elev, direction[num_elev]);
+        }
         /*第四步*/
         write_log->move(num_elev, direction[num_elev]);
     }

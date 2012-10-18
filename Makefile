@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -O1
-OBJS = main.o input.o storage.o log.o level_info.o poisson.o
+OBJS = main.o input.o storage.o log.o level_info.o poisson.o managerA.o
 all : $(OBJS)
 	$(CC) $(CFLAGS) -o sim_elev $(OBJS)
 
