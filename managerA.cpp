@@ -23,10 +23,11 @@ managerA::managerA(ElevatorParameters* elev_para ,level_info* levinfo, Log* mana
     tail = new Passenger*[elev_para->elevator_num+1];
     for(int i = 0; i < elev_para->elevator_num+1; i ++)
     {
-        direction[i] = 1; // 初始情况下假设在1层向上运动
+        direction[i] = -1; // 初始情况下假设在1层向上运动
         head[i] = new Passenger;
         tail[i] = head[i];
         sum_passenger[i] = 0;
+        level[i] = 0;
     }
     now_time = 0;
 }
@@ -45,7 +46,7 @@ void managerA::manage()
         int sum_on = 0;//记录在这一个电梯的当前位置下，上乘了的乘客数；
         int sum_off = 0;//记录在这一个电梯的当前位置下，下乘了的乘客数；
         
-        if(level[num_elev] == 1 || level[num_elev] == ManaElev_para->level_num)
+        if(level[num_elev] == 0 || level[num_elev] == ManaElev_para->level_num-1)
             direction[num_elev] = -direction[num_elev];
         
         Passenger* checkpre = head[num_elev]->next;
