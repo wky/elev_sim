@@ -112,8 +112,8 @@ void managerA::manage()
             level[num_elev] += direction[num_elev];
             write_log->move(num_elev, direction[num_elev]);
         }
-        /*第四步*/
-        write_log->move(num_elev, direction[num_elev]);
+        else
+            write_log->move(num_elev,0);
     }
 }
 
@@ -127,6 +127,7 @@ void managerA::run()
      */
     for(int pierce = 0; pierce < ManaElev_para->simulation_cycles; pierce ++)
     {
+        write_log->start_time_slot();
         levelInfo_forManager->generate_passenger(pierce);
         for(int go = 0; go < ManaElev_para->elevator_speed; go ++)
         {

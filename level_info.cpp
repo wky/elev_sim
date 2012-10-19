@@ -86,6 +86,6 @@ void level_info::generate_passenger(int pierce_time)//传入时间点,每个时�
             
         }
 	}
-    updatelevel_log->start_time_slot();
+    
 }
 
