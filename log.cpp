@@ -67,10 +67,7 @@ void Log::drop(int elev_id, int num)
 #ifdef __DEBUG__LOG
     printf("drop %d from elev %d\n", num, elev_id);
 #endif
-<<<<<<< HEAD
     total_thput += num;
-=======
->>>>>>> b6fc3cd9fc3c2928a3359e1effed64360239f2d7
 }
 
 void Log::move(int elev_id, int diff)
@@ -82,10 +79,7 @@ void Log::move(int elev_id, int diff)
 #ifdef __DEBUG__LOG
     printf("move %d elev %d\n", diff, elev_id);
 #endif
-<<<<<<< HEAD
     total_run += abs(diff);
-=======
->>>>>>> b6fc3cd9fc3c2928a3359e1effed64360239f2d7
 }
 
 void Log::start_time_slot(){
