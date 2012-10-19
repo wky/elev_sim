@@ -34,6 +34,14 @@ class StorageManager{
         AllocationNode *alloc;
         AllocationNode *alloc_tail;
         void allocate_more(int amount = 100);
+        int p_cnt;
+        int total_wait;
+        int total_onboard;
+        int total_thput;
+        int total_dist;
+        int max_wait;
+        int max_onboard;
+        int max_thput;
     public:
         StorageManager(int init_vol = 512);
         Passenger* get_new();               // 获取新乘客(数据未初始化，next ptr是NULL)

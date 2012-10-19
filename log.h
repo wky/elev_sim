@@ -11,6 +11,8 @@ log.h
 #include "defs.h"
 #include <stdio.h>
 
+#define __DEBUG__LOG
+
 static char file_err[] = "Unable to open file.";
 
 static unsigned int magic_num = 0x19951004;
@@ -28,6 +30,8 @@ class Log
         int *new_pas;       // 数组记录新加的乘客
         int stats_pos;      // 文件中写入统计数据的位置
         int counter;        // 时间计数器
+        int total_run;      // 总行程
+        int total_thput;    // 总运送量
     public:
         Log(ElevatorParameters*);   // 构造函数，传入运行参数。默认电梯均处于1层
         ~Log();                     // 析构函数，释放资源

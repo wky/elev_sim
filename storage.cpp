@@ -4,6 +4,7 @@
 storage.cpp
 */
 #include <stdio.h>
+#include <stdlib.h>
 #include "storage.h"
 
 StorageManager::StorageManager(int init_vol){
@@ -24,6 +25,12 @@ StorageManager::StorageManager(int init_vol){
     for (Passenger *ptr = head; ptr != tail; ptr++)
         ptr->next = ptr + 1;
     tail->next = NULL;
+    total_dist = 0;
+    total_onboard = 0;
+    total_wait = 0;
+    max_onboard = 0;
+    max_wait = 0;
+    p_cnt = 0;
 }
 
 Passenger* StorageManager::get_new(){
@@ -41,6 +48,16 @@ Passenger* StorageManager::get_new(){
 void StorageManager::push_arrived(Passenger *p){
     if (p == NULL)
         return;
+    p_cnt++;
+    total_dist += abs(p->destination_level - p->arrival_level);
+    int t = p->in_time - p->arrival_time;
+    total_wait += t;
+    if (t > max_wait)
+        max_wait = t;
+    t = p->out_time - p->in_time;
+    total_onboard += t;
+    if (t > max_onboard)
+        max_onboard = t;
     p->next = NULL;
     tail->next = p;
     tail = p;
@@ -67,7 +84,11 @@ void StorageManager::allocate_more(int amount){
 }
 
 void StorageManager::add_passenger_stats(Stats* stats){
-    // TODO
+    stats->avg_twait = (float)total_wait / p_cnt;
+    stats->max_twait = (float)max_wait;
+    stats->avg_tonboard = (float)total_onboard / p_cnt;
+    stats->max_tonboard = (float)max_onboard;
+    stats->avg_dist = (float)total_dist / p_cnt;
 }
 
 StorageManager::~StorageManager(){

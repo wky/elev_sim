@@ -56,8 +56,6 @@ struct Stats
     float avg_tonboard;    //平均乘梯时间
     float max_tonboard;    //最长乘梯时间
     float avg_thput;       //平均运送率（单位时间内运达数量）
-    float max_thput;       //最高运送率
-    float avg_load;        //平均载客量（电梯内的人数）
     float avg_dist;        //平均楼层差（乘客的目的层数减出现层数）
     float avg_run100;      //平均电梯行程（每百位乘客）
 };
