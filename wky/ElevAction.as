@@ -1,0 +1,1 @@
+﻿package  wky{	public class ElevAction {		public var op:int;		public var dat:int;	}}
