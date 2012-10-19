@@ -11,6 +11,8 @@ log.h
 #include "defs.h"
 #include <stdio.h>
 
+#define __DEBUG__LOG
+
 static char file_err[] = "Unable to open file.";
 
 static unsigned int magic_num = 0x19951004;

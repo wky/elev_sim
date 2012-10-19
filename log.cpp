@@ -40,6 +40,9 @@ Log::~Log(){
 void Log::add(int level, int num)
 {
     new_pas[level] = num;
+#ifdef __DEBUG__LOG
+    printf("add %d to level %d\n", num, level);
+#endif
 }
 
 void Log::load(int elev_id, int num)
@@ -48,6 +51,9 @@ void Log::load(int elev_id, int num)
     fwrite((void*)(op_code + 1), sizeof(int), 1, fp);
     fwrite((void*)&elev_id, sizeof(int), 1, fp);
     fwrite((void*)&num, sizeof(int), 1, fp);
+#ifdef __DEBUG__LOG
+    printf("load %d from elev %d\n", num, elev_id);
+#endif
 }
 
 void Log::drop(int elev_id, int num)
@@ -56,6 +62,9 @@ void Log::drop(int elev_id, int num)
     fwrite((void*)(op_code + 2), sizeof(int), 1, fp);
     fwrite((void*)&elev_id, sizeof(int), 1, fp);
     fwrite((void*)&num, sizeof(int), 1, fp);
+#ifdef __DEBUG__LOG
+    printf("drop %d from elev %d\n", num, elev_id);
+#endif
 }
 
 void Log::move(int elev_id, int diff)
@@ -64,6 +73,9 @@ void Log::move(int elev_id, int diff)
     fwrite((void*)op_code, sizeof(int), 1, fp);
     fwrite((void*)&elev_id, sizeof(int), 1, fp);
     fwrite((void*)&diff, sizeof(int), 1, fp);
+#ifdef __DEBUG__LOG
+    printf("move %d elev %d\n", diff, elev_id);
+#endif
 }
 
 void Log::start_time_slot(){
