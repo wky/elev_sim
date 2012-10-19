@@ -52,11 +52,10 @@ void managerA::manage()
         Passenger* checkpre = head[num_elev]->next;
         Passenger* checkrear = head[num_elev];
         /*第一步*/
-        while(checkpre != NULL)
+        while(sum_passenger[num_elev] != 0 && checkpre != NULL)
         {
-            if(sum_passenger[num_elev] == 0) break;
-            else if( (checkpre->destination_level-checkpre->arrival_level)
-                    * direction[num_elev] > 0)//说明是同方向的
+            
+            if(checkpre->destination_level == level[num_elev])//说明是同方向的
             {
                 sum_off ++;
                 sum_passenger[num_elev] --;
@@ -70,13 +69,14 @@ void managerA::manage()
                 checkrear = checkpre;//把这个乘客去掉
                 checkpre = checkpre->next;
             }
+            if(checkpre == NULL)//如果搜到了电梯乘客的最后就退出
+                break;
         }
         
         /*第二步*/
-        while(1)//不断上乘
+        while(sum_passenger[num_elev] != ManaElev_para->elevator_load
+              && levelInfo_forManager->passup_head[level[num_elev]] != NULL)//不断上乘
         {
-            if(sum_passenger[num_elev] == ManaElev_para->elevator_load)//满载
-                break;
             if(direction[num_elev] == 1)//上行
             {
                 Passenger* pullp = levelInfo_forManager->passup_head[level[num_elev]];
@@ -90,7 +90,7 @@ void managerA::manage()
                 }
                 else break;//上行无人
             }
-            else
+            else//下行
             {
                 Passenger* pullp = levelInfo_forManager->passdown_head[level[num_elev]];
                 if(pullp != NULL)//说明该层有人要上行
@@ -108,7 +108,39 @@ void managerA::manage()
         /*第三步，判断电梯是否移动*/
         write_log->load(num_elev, sum_on);
         write_log->drop(num_elev, sum_off);
-        if(sum_passenger[num_elev] != 0)
+        
+        bool judge = false;//判断上面或者下面的楼层是否有人
+        if(direction[num_elev] == 1)//上行
+        {
+            for(int prev = level[num_elev]+1; prev < ManaElev_para->elevator_num-1; prev ++)
+                if(levelInfo_forManager->passup_head[prev] != NULL)
+                {
+                    judge = true;
+                    break;
+                }
+            if(levelInfo_forManager->passdown_head[ManaElev_para->elevator_num-1] != NULL)
+            {
+                judge = true;
+            }
+
+        }
+        if(direction[num_elev] == -1)//下行
+        {
+            for(int prev = level[num_elev]-1; prev > 0; prev --)
+                if(levelInfo_forManager->passdown_head[prev] != NULL)
+                {
+                    judge = true;
+                    break;
+                }
+            if(levelInfo_forManager->passup_head[0] != NULL)
+            {
+                judge = true;
+            }
+            
+        }
+        if(judge)
+            printf("***youren\n");
+        if(sum_passenger[num_elev] != 0 || judge)
         {
             level[num_elev] += direction[num_elev];
             write_log->move(num_elev, direction[num_elev]);

@@ -28,6 +28,7 @@ class level_info
 	Passenger** passup_tail;
     Passenger** passdown_head; 	                                 // 楼层乘客的链表
 	Passenger** passdown_tail;
+    
     StorageManager* level_sto_manager;                      // 后面调用其中的函数得到新的乘客连接到楼层乘客链表中
 	poisson culculate_poisson;
     Log* updatelevel_log;//每层新加乘客的记录
