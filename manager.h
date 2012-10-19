@@ -34,7 +34,7 @@ public:
     manager(ElevatorParameters*, level_info*, Log*){}
     virtual void manage() = 0;
 	virtual void run() = 0;
-    ~manager(){}
+    virtual ~manager(){}
 };
 
 #endif

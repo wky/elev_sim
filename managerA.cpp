@@ -144,7 +144,6 @@ managerA::~managerA()
     for(int i = 0; i < ManaElev_para->elevator_num; i ++)
     {
         delete []head[i];
-        delete []tail[i];
     }
     delete []head;
     delete []tail;
