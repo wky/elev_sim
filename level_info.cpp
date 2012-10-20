@@ -17,7 +17,7 @@ level_info::level_info(ElevatorParameters* elev_para, StorageManager* level_mana
 	for(int i  = 0; i < transcript_elev->level_num; i ++)
 	{
         passup_head[i] = new Passenger;
-		passup_tail[i] = passup_head[i];
+        passup_tail[i] = passup_head[i];
         passdown_head[i] = new Passenger;
 		passdown_tail[i] = passdown_head[i];
 	}
@@ -58,12 +58,14 @@ void level_info::generate_passenger(int pierce_time)//传入时间点,每个时�
             {
                 passup_tail[i]->next = judge_tmp;
                 passup_tail[i] = passup_tail[i]->next;
+                printf("sussup\n");
             }
             
             else//下楼
             {
                 passdown_tail[i]->next = judge_tmp;
                 passdown_tail[i] = passdown_tail[i]->next;
+                printf("sussdown\n");
             }
             
             

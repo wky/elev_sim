@@ -75,16 +75,15 @@ void managerA::manage()
         }
         
         /*第二步*/
-        while(sum_passenger[num_elev] != ManaElev_para->elevator_load
-              && levelInfo_forManager->passup_head[level[num_elev]] != NULL)//不断上乘
+        while(sum_passenger[num_elev] != ManaElev_para->elevator_load)//不断上乘
         {
             if(direction[num_elev] == 1)//上行
             {
-                Passenger* pullp = levelInfo_forManager->passup_head[level[num_elev]];
+                Passenger* pullp = levelInfo_forManager->passup_head[level[num_elev]]->next;
                 if(pullp != NULL)//说明该层有人要上行
                 {
                     tail[num_elev]->next = pullp;
-                    levelInfo_forManager->passup_head[level[num_elev]] = pullp->next;
+                    levelInfo_forManager->passup_head[level[num_elev]]->next = pullp->next;
                     sum_passenger[num_elev] ++;
                     sum_on ++;
                 }
@@ -92,11 +91,11 @@ void managerA::manage()
             }
             else//下行
             {
-                Passenger* pullp = levelInfo_forManager->passdown_head[level[num_elev]];
+                Passenger* pullp = levelInfo_forManager->passdown_head[level[num_elev]]->next;
                 if(pullp != NULL)//说明该层有人要上行
                 {
                     tail[num_elev]->next = pullp;
-                    levelInfo_forManager->passdown_head[level[num_elev]] = pullp->next;
+                    levelInfo_forManager->passdown_head[level[num_elev]]->next = pullp->next;
                     sum_passenger[num_elev] ++;
                     sum_on ++;
                 }
