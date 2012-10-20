@@ -9,7 +9,7 @@ storage.h
 
 #include "defs.h"
 
-//#define __DEBUG_STORAGE
+#define __DEBUG_STORAGE
 
 
 /*

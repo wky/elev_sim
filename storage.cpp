@@ -48,6 +48,9 @@ Passenger* StorageManager::get_new(){
 void StorageManager::push_arrived(Passenger *p){
     if (p == NULL)
         return;
+#ifdef __DEBUG_STORAGE
+    printf("__DEBUG_STORAGE: reclaimed a Passenger at 0x%x.\n", p);
+#endif
     p_cnt++;
     total_dist += abs(p->destination_level - p->arrival_level);
     int t = p->in_time - p->arrival_time;
@@ -61,9 +64,6 @@ void StorageManager::push_arrived(Passenger *p){
     p->next = NULL;
     tail->next = p;
     tail = p;
-#ifdef __DEBUG_STORAGE
-    printf("__DEBUG_STORAGE: reclaimed a Passenger at 0x%x.\n", tail);
-#endif
 }
 
 void StorageManager::allocate_more(int amount){
