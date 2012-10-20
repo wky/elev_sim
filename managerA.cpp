@@ -55,8 +55,9 @@ void managerA::manage()
         while(sum_passenger[num_elev] != 0 && checkpre != NULL)
         {
             
-            if(checkpre->destination_level == level[num_elev])//说明是同方向的
+            if(checkpre->destination_level == level[num_elev])//有乘客是这层的
             {
+                checkpre->out_time = now_time;
                 sum_off ++;
                 sum_passenger[num_elev] --;
                 // push_arrived 该乘客
@@ -86,7 +87,6 @@ void managerA::manage()
                     levelInfo_forManager->passup_head[level[num_elev]] = pullp->next;
                     sum_passenger[num_elev] ++;
                     sum_on ++;
-                    pullp->out_time = now_time;//记录乘客的出梯时间
                 }
                 else break;//上行无人
             }
@@ -99,7 +99,6 @@ void managerA::manage()
                     levelInfo_forManager->passdown_head[level[num_elev]] = pullp->next;
                     sum_passenger[num_elev] ++;
                     sum_on ++;
-                    pullp->out_time = now_time;//记录乘客的出梯时间
                 }
                 else break;//下行无人
             }
