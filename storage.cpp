@@ -104,5 +104,3 @@ StorageManager::~StorageManager(){
     }
 }
 
-// signed-off-by: Weikun Yang wkyjyy@gmail.com
-

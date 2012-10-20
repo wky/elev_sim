@@ -10,8 +10,8 @@ input.cpp
 void set_default(ElevatorParameters *param)
 {
     param->elevator_num = 2;
-    param->elevator_speed = 3;
-    param->elevator_load = 7;
+    param->elevator_speed = 4;
+    param->elevator_load = 10;
     param->level_num = 12;
     param->arrival_rate = 0.8;
     param->simulation_cycles = 200;
