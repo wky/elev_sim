@@ -52,33 +52,18 @@ void level_info::generate_passenger(int pierce_time)//传入时间点,每个时�
             judge_tmp->arrival_time = pierce_time;
             judge_tmp->arrival_level = i;
             judge_tmp->destination_level = aim_level;
-            printf("aim_level%d\n", aim_level);
+            //printf("aim_level%d\n", aim_level);
+            
             if(judge_tmp->destination_level - judge_tmp->arrival_level > 0)//上楼
             {
-                if (passup_head[i] == NULL)
-                {
-                    passup_head[i] = judge_tmp;
-                    passup_tail[i] = passup_head[i];
-                }
-                else
-                {
-                    passup_tail[i]->next = judge_tmp;
-                    passup_tail[i] = passup_tail[i]->next;
-                }
+                passup_tail[i]->next = judge_tmp;
+                passup_tail[i] = passup_tail[i]->next;
             }
             
             else//下楼
             {
-                if (passdown_head[i] == NULL)
-                {
-                    passdown_head[i] = judge_tmp;
-                    passdown_tail[i] = passdown_head[i];
-                }
-                else
-                {
-                    passdown_tail[i]->next = judge_tmp;
-                    passdown_tail[i] = passdown_tail[i]->next;
-                }
+                passdown_tail[i]->next = judge_tmp;
+                passdown_tail[i] = passdown_tail[i]->next;
             }
             
             
