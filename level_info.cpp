@@ -16,10 +16,10 @@ level_info::level_info(ElevatorParameters* elev_para, StorageManager* level_mana
     passdown_tail = new Passenger*[transcript_elev->level_num];
 	for(int i  = 0; i < transcript_elev->level_num; i ++)
 	{
-        passup_head[i] = NULL;
-		passup_tail[i] = NULL;
-        passdown_head[i] = NULL;
-		passdown_tail[i] = NULL;
+        passup_head[i] = new Passenger;
+		passup_tail[i] = passup_head[i];
+        passdown_head[i] = new Passenger;
+		passdown_tail[i] = passdown_head[i];
 	}
     
     updatelevel_log = level_log;
