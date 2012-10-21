@@ -64,18 +64,23 @@ void LogFile::add(int level, int num)
 
 void LogFile::collect(Passenger& p){
     p_cnt ++;
-#ifdef  __show_stats
-    printf("collect%d\n",p_cnt);
-#endif
+    int dist = abs(p.destination_level - p.arrival_level);
     total_dist += abs(p.destination_level - p.arrival_level);
     int t = p.in_time - p.arrival_time;
     total_wait += t;
     if (t > max_wait)
         max_wait = t;
+#ifdef  __show_stats
+    printf("collect%d\n",p_cnt);
+    printf("dist:%d wait:%d\n",dist,t);
+#endif
     t = p.out_time - p.in_time;
     total_onboard += t;
     if (t > max_onboard)
         max_onboard = t;
+#ifdef  __show_stats
+    printf("onboard: %d\n",t);
+#endif
 }
 
 void LogFile::load(int elev_id, int num)
@@ -144,14 +149,12 @@ void LogFile::write_stats(){
     stats.avg_dist = (float)total_dist / p_cnt;
     stats.avg_thput = (float)total_thput / counter;
     stats.avg_run100 = (float)total_run / elevs / total_thput * 100;
-#ifdef __show_stats
-    printf("%d,total wait:%d\n",p_cnt, total_wait);
-    printf("avg wait:%f\nmax wait:%f\navg on:%f\nmax on:%f\n",
-           stats.avg_twait, stats.max_twait, 
+    printf("avg waiting time:%f\nmax waiting time:%f\n",
+           stats.avg_twait, stats.max_twait);
+    printf("avg onboard time:%f\nmax onboard time:%f\n",
            stats.avg_tonboard, stats.max_tonboard);
-    printf("avg dist:%f\navg thput:%f\navg run/100:%f\n",
+    printf("avg distance:%f\navg throughput:%f\navg runing per 100:%f\n",
            stats.avg_dist, stats.avg_thput, stats.avg_run100);
-#endif
     fseek(fp, stats_pos, 0);
     fwrite((void*)&stats, sizeof(Stats), 1, fp);
 }

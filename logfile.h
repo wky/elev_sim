@@ -12,7 +12,7 @@ logfile.h
 
 //#define __DEBUG__LOG
 //#define __verify
-#define __show_stats
+//#define __show_stats
 
 static char file_err[] = "Unable to open file.";
 

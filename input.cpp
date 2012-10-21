@@ -14,7 +14,7 @@ void set_default(ElevatorParameters *param)
     param->elevator_load = 10;
     param->level_num = 12;
     param->arrival_rate = 0.8;
-    param->simulation_cycles = 200;
+    param->simulation_cycles = 50;
     param->algorithm_select = Default;
     param->output_file = default_output;
     param->verbose = false;
@@ -86,4 +86,5 @@ bool get_param(int argc, char *argv[], ElevatorParameters *param){
     }
     return true;
 }
+// signed-off-by: Weikun Yang wkyjyy@gmail.com
 

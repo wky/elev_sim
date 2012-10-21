@@ -25,3 +25,5 @@ Modules:
 Implementation:
     (not yet decided)
 
+For more info, checkout the full doc
+

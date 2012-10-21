@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
     Levels levels(p, logger);
     WManager manager(p, levels, logger);
     manager.run();
-    logger.write_stats();
     return 0;
 }
+
+// signed-off-by: Weikun Yang wkyjyy@gmail.com

@@ -22,7 +22,7 @@ void WManager::run(){
             manage(e);
         logger.end_time_slot();    
     }
-
+    logger.write_stats();
 }
 
 void WManager::manage(int id){
@@ -38,7 +38,7 @@ void WManager::manage(int id){
             it++;
             Passenger p = *it_d;
             if (p.destination_level == position[id]){
-                p.out_time = cnt + moves? 1: 0;
+                p.out_time = cnt + (moves>0? 1: 0);
                 logger.collect(p);
                 out_cnt++;
                 onboard[id].erase(it_d);
@@ -123,3 +123,5 @@ bool WManager::needs_to_go(int id, bool test_dir){
     }
     return false;
 }
+
+// signed-off-by: Weikun Yang wkyjyy@gmail.com
